@@ -1,0 +1,16 @@
+.post-avatar {
+    width: 48px;
+    height: 48px;
+    flex: none;
+    margin-inline-end: 4px;
+}
+
+.conversation-flexbox {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.display-name {
+    font-weight: bold;
+}

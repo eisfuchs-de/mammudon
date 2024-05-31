@@ -1,0 +1,311 @@
+[project]
+# This is the name of your project. The first time you publish this
+# package, this name will be registered for you. It will determine how
+# users can install this project, e.g.:
+#
+# $ pip install sampleproject
+#
+# And where it will live on PyPI: https://pypi.org/project/sampleproject/
+#
+# There are some restrictions on what makes a valid project name
+# specification here:
+# https://packaging.python.org/specifications/core-metadata/#name
+name = "mammudon" # Required
+
+# Versions should comply with PEP 440:
+# https://www.python.org/dev/peps/pep-0440/
+#
+# For a discussion on single-sourcing the version, see
+# https://packaging.python.org/guides/single-sourcing-package-version/
+version = "0.1.dev1"  # Required
+
+# This is a one-line description or tagline of what your project does. This
+# corresponds to the "Summary" metadata field:
+# https://packaging.python.org/specifications/core-metadata/#summary
+description = "A user friendly Mastodon desktop client"  # Optional
+
+# This is an optional longer description of your project that represents
+# the body of text which users will see when they visit PyPI.
+#
+# Often, this is the same as your README, so you can just read it in from
+# that file directly (as we have already done above)
+#
+# This field corresponds to the "Description" metadata field:
+# https://packaging.python.org/specifications/core-metadata/#description-optional
+readme = "README.md"  # Optional
+
+# Specify which Python versions you support. In contrast to the
+# 'Programming Language' classifiers above, 'pip install' will check this
+# and refuse to install the project if the version does not match. See
+# https://packaging.python.org/guides/distributing-packages-using-setuptools/#python-requires
+requires-python = ">=3.10, <4"
+
+# This is either text indicating the license for the distribution, or a file
+# that contains the license
+# https://packaging.python.org/en/latest/specifications/core-metadata/#license
+license = {file = "LICENSE"}
+
+# This field adds keywords for your project which will appear on the
+# project page. What does your project relate to?
+#
+# Note that this is a list of additional keywords, separated
+# by commas, to be used to assist searching for the distribution in a
+# larger catalog.
+keywords = ["mammudon", "mastodon"]  # Optional
+
+# This should be your name or the name of the organization who originally
+# authored the project, and a valid email address corresponding to the name
+# listed.
+authors = [
+  { name = "Dario Abatianni", email = "eisfuchs@tigress.com" } # Optional
+]
+
+# This should be your name or the names of the organization who currently
+# maintains the project, and a valid email address corresponding to the name
+# listed.
+maintainers = [
+  { name = "Dario Abatianni", email = "eisfuchs@tigress.com" } # Optional
+]
+
+# Classifiers help users find your project by categorizing it.
+#
+# For a list of valid classifiers, see https://pypi.org/classifiers/
+classifiers = [  # Optional
+    # How mature is this project? Common values are
+    #   3 - Alpha
+    #   4 - Beta
+    #   5 - Production/Stable
+    "Development Status :: 3 - Alpha",
+    "Environment :: X11 Applications :: Qt",
+    # Indicate who your project is intended for
+    "Intended Audience :: End Users/Desktop",
+    "Topic :: Communications",
+    # Pick your license as you wish
+    "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
+    # Specify the Python versions you support here. In particular, ensure
+    # that you indicate you support Python 3. These classifiers are *not*
+    # checked by 'pip install'. See instead 'python_requires' below.
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+]
+
+# This field lists other packages that your project depends on to run.
+# Any package you put here will be installed by pip when your project is
+# installed, so they must be valid existing projects.
+#
+# For an analysis of this field vs pip's requirements files see:
+# https://packaging.python.org/discussions/install-requires-vs-requirements/
+ # Optional
+dependencies = [
+    "Mastodon.py",
+    "PyQt6",
+    "PyQt6-WebEngine",
+    "ffmpeg-python",
+]
+
+# TODO: verify these dependencies and reflect them in the toml and/or README.md
+# NOTE: needs gstreamer-plugins-libav (and gstreamer-plugins-vaapi?) to work with h264
+#       also: qt6-multimedia
+
+# List URLs that are relevant to your project
+#
+# This field corresponds to the "Project-URL" and "Home-Page" metadata fields:
+# https://packaging.python.org/specifications/core-metadata/#project-url-multiple-use
+# https://packaging.python.org/specifications/core-metadata/#home-page-optional
+#
+# Examples listed include a pattern for specifying where the package tracks
+# issues, where the source is hosted, where to say thanks to the package
+# maintainers, and where to support the project financially. The key is
+# what's used to render the link text on PyPI.
+[project.urls]  # Optional
+"Homepage" = "https://eisfuchs-de.github.io/mammudon/"
+"Bug Reports" = "https://github.com/eisfuchs-de/mammudon/issues"
+"Source" = "https://github.com/eisfuchs-de/mammudon"
+
+# The following would provide a command line executable called `mammudon`
+# which executes the function `main` from this package when invoked.
+[project.gui-scripts]  # Optional
+mammudon = "mammudon.mammudon:main"
+
+# This is configuration specific to the `setuptools` build backend.
+# If you are using a different build backend, you will need to change this.
+[tool.setuptools]
+
+[tool.setuptools.packages]
+find = {}  # Scan the project directory with the default parameters
+
+# If there are data files included in your packages that need to be
+# installed, specify them here.
+# Optional
+[tool.setuptools.package-data]
+"mammudon.icons" = [
+    "attachment.png",
+    "bookmark_on.png",
+    "bookmark.png",
+    "boost_on.png",
+    "boost.png",
+    "close.png",
+    "conversation_disabled.png",
+    "conversation_on.png",
+    "conversation.png",
+    "copy.png",
+    "example_booster.png",
+    "example_card.png",
+    "example_emoji.png",
+    "favorite_on.png",
+    "favorite.png",
+    "focus_point.png",
+    "follow_black.png",
+    "follow.png",
+    "history.png",
+    "kebab_menu.png",
+    "login.png",
+    "logout.png",
+    "mammudon_icon_counter.png",
+    "mammudon_icon.png",
+    "meatballs_menu.png",
+    "mute.png",
+    "new_post.png",
+    "notification_on.png",
+    "notification.png",
+    "poll.png",
+    "preferences.png",
+    "quit.png",
+    "reload.png",
+    "reply_on.png",
+    "reply.png",
+    "scheduled.png",
+    "timeline_bookmarks.png",
+    "timeline_conversations.png",
+    "timeline_favorites.png",
+    "timeline_home.png",
+    "timeline_local.png",
+    "timeline_notifications.png",
+    "timeline_public.png",
+    "timeline.png",
+    "trashcan.png",
+    "unfollow.png",
+    "unmute.png",
+    "verified.png",
+    "visibility_direct.png",
+    "visibility_private.png",
+    "visibility_public.png",
+    "visibility_unlisted.png",
+    "web_browser.png",
+]
+
+"mammudon.images" = [
+    "image_audio.png",
+    "image_media.png",
+]
+
+"mammudon.ui" = [
+    "account_manager.ui",
+    "conversation_view.ui",
+    "edit_media_attachment.ui",
+    "image_browser.ui",
+    "mammudon_main_window.ui",
+    "media_attachment.ui",
+    "name_list_entry.ui",
+    "new_post.ui",
+    "notification_view.ui",
+    "post_history_view.ui",
+    "postview.ui",
+    "preferences.ui",
+    "timeline.ui",
+    "user_profile.ui",
+]
+
+"mammudon.res" = [
+    "about_mammudon_en.html",
+    "demo_boosted_by.dict",
+    "demo_status.dict",
+]
+
+"mammudon.themes.dark" = [
+    "audio_player.css",
+    "body.css",
+    "card.css",
+    "conversation.css",
+    "in_reply_to.css",
+    "media.css",
+    "media_hover.css",
+    "notification_body.css",
+    "notification.css",
+    "notification_post.css",
+    "poll.css",
+    "post.css",
+    "spoiler.css",
+    "theme.txt",
+]
+
+"mammudon.themes.light" = [
+    "audio_player.css",
+    "body.css",
+    "card.css",
+    "conversation.css",
+    "in_reply_to.css",
+    "media.css",
+    "media_hover.css",
+    "notification_body.css",
+    "notification.css",
+    "notification_post.css",
+    "poll.css",
+    "post.css",
+    "spoiler.css",
+    "theme.txt",
+]
+
+"mammudon.layouts.default" = [
+    "audio_player.html",
+    "audio_without_preview.html",
+    "audio_with_preview.html",
+    "boosted_by.html",
+    "card_body_link_image.html",
+    "card_body_link_no_image.html",
+    "card_body_photo.html",
+    "card_body_rich_text.html",
+    "card_body_video.html",
+    "card_marker_alt.html",
+    "conversation.html",
+    "display_name.html",
+    "gifv_player.html",
+    "image_without_preview.html",
+    "image_with_preview.html",
+    "in_reply_to.html",
+    "layout.txt",
+    "media_grid.html",
+    "media_marker_alt.html",
+    "media_marker_gifv.html",
+    "media_markers.html",
+    "notification_favourite_avatar.html",
+    "notification_favourite.html",
+    "notification_follow.html",
+    "notification_follow_request.html",
+    "notification.html",
+    "notification_mention.html",
+    "notification_poll.html",
+    "notification_poll_own.html",
+    "notification_post_avatar.html",
+    "notification_reblog.html",
+    "poll_footer_closed.html",
+    "poll_footer_open.html",
+    "poll_footer_open_results.html",
+    "poll_footer_voted.html",
+    "poll.html",
+    "poll_item_checkbox.html",
+    "poll_item_closed.html",
+    "poll_item_radio.html",
+    "poll_item_voted.html",
+    "post.html",
+    "spoiler_end.html",
+    "spoiler_start.html",
+    "video_player.html",
+]
+
+[build-system]
+# These are the assumed default build requirements from pip:
+# https://pip.pypa.io/en/stable/reference/pip/#pep-517-and-518-support
+requires = ["setuptools>=69.0", "wheel"]
+build-backend = "setuptools.build_meta"

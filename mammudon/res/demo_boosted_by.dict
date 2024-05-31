@@ -1,0 +1,11 @@
+{
+	'id': 98765432,
+	'username': 'mammudon_booster',
+	'acct': 'mammudon_booster@example.com',
+	'display_name': 'Mammudon Booster 😊',
+	'emojis': [],
+	'note': '<p>A user friendly Mastodon client booster</p>',
+	'url': 'https://example.com/@mammudon_booster',
+	'uri': 'https://example.com/users/mammudon_booster',
+	'avatar': 'file:mammudon/icons/example_booster.png',
+}

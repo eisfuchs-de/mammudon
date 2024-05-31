@@ -1,0 +1,21 @@
+.notification-type {
+    font-size: 12px;
+    opacity: 0.5;
+}
+
+.notification-type-icon {
+    opacity: 1.0;
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    padding-bottom: 4px;
+    padding-right: 2px;
+}
+
+.post-layout {
+	display: flex;
+}
+
+p {
+	margin: 0;
+}

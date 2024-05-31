@@ -1,0 +1,12 @@
+
+.media-hover-%media_index%
+{
+    transition: 0.5s;
+}
+
+.media-hover-%media_index%:hover
+{
+    transform: scale(2.0)
+    translate(%focus_x%%, %focus_y%%);
+    transition: 1s;
+}

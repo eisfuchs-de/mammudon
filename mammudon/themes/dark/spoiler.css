@@ -1,0 +1,22 @@
+
+.spoiler-header {
+    font-size: 12px;
+    font-weight: bold;
+    background: #687390;
+    color: black;
+    padding: 3px 6px;
+    border-radius: 6px;
+}
+
+.spoiler-warning {
+    display: inline-block;
+    padding: 8px;
+}
+
+details[open] > summary::after {
+    content: "SHOW LESS";
+}
+
+details > summary::after {
+    content: "SHOW MORE";
+}

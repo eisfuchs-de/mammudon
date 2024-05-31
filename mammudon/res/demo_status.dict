@@ -1,0 +1,100 @@
+{
+	'id': 47110815,
+	'sensitive': False,
+	'spoiler_text': 'Hidden information here!',
+	'visibility': 'public',
+	'language': 'de',
+	'uri': 'https://example.com/statuses/47110815',
+	'url': 'https://example.com/statuses/47110815',
+	'content': '<p>Mammudon test status. :mammudon: <blockquote>This is how your statuses will look</blockquote></p><p> 👀 with your currently selected preferences in place! ❤️</p>',
+	'account':
+	{
+		'id': 123456789,
+		'username': 'mammudon',
+		'acct': 'mammudon@example.com',
+		'display_name': 'Mammudon 😊',
+		'emojis': [
+	    	{
+    			'shortcode': 'mammudon',
+			    'url': 'file:mammudon/icons/example_emoji.png',
+		    }
+		],
+		'note': '<p>A user friendly Mastodon client</p>',
+		'url': 'https://example.com/@mammudon',
+		'uri': 'https://example.com/users/mammudon',
+		'avatar': 'file:mammudon/icons/mammudon_icon.png',
+	},
+     'media_attachmentsd':
+     [
+         {
+             'id': 112333896764702752,
+             'typee': 'audio',
+             'typef': 'video',
+             'typed': 'gifv',
+             'type': 'image',
+             'urll': 'https://pool.jortage.com/tootcat/media_attachments/files/112/333/896/764/702/752/original/b9b36685ccdfd818.mp3',
+             'ursl': 'https://pool.jortage.com/tootcat/cache/media_attachments/files/112/372/341/061/387/268/original/c948ed115f35956c.mp4',
+             'url': 'file:mammudon/images/image_media.png',
+             'preview_urld': 'https://pool.jortage.com/tootcat/media_attachments/files/112/264/647/902/410/836/small/b49fbd4b1c7f41f6.jpg',
+             'preview_url': 'file:mammudon/images/image_media.png',
+             'remote_url': None,
+             'preview_remote_url': None,
+             'text_url': None,
+             'meta':
+             {
+                 'original':
+                 {
+                     'duration': 153.756735,
+                     'bitrate': 179630
+                }
+            },
+            'description': 'dsfsaghafgdsg',
+            'blurhash': None
+        }
+    ],
+	'emojis': [],
+	'card': {
+		'url': 'https://example.com/mammudon_demo_card.html',
+		'title': 'Mammudon Demo Card',
+		'description': 'Mammudon Demo Card shows you how a card will look with your new preferences!',
+		'language': 'de',
+		'type': 'link',
+		'author_name': 'Mammuson',
+		'provider_name': 'Mammudon',
+		'provider_url': 'https://example.com',
+		'html': '',
+		'width': 1000,
+		'height': 666,
+		'image': 'file:mammudon/icons/example_card.png',
+		'image_description': '',
+	},
+	'poll' : {
+        'id': 222590,
+        'expires_at': 'Never',
+        'expired': False,
+        'multiple': False,
+        'votes_count': 611,
+        'voters_count': 611,
+        'voted': True,
+        'own_votes': [0],
+        'options': [
+            {
+                'title': 'flop',
+                'votes_count': 134
+            },
+            {
+                'title': 'flomp',
+                'votes_count': 185
+            },
+            {
+                'title': 'flump',
+                'votes_count': 91
+            },
+            {
+                'title': 'floomp',
+                'votes_count': 201
+            }
+        ],
+        'emojis': []
+    }
+}

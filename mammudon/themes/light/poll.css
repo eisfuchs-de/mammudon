@@ -1,0 +1,64 @@
+
+.poll {
+	display: flex;
+    flex-flow: row wrap;
+    padding: 8px;
+}
+
+.poll-item {
+	width: 100%;
+}
+
+.poll-choice {
+    width: 35px;
+    text-align: right;
+    margin: 0 0 8px; 4px;
+}
+
+.poll-percent {
+	font-weight: bold;
+    width: 35px;
+    text-align: right;
+    margin-right: 8px;
+}
+
+.poll-bar-graph {
+	border: solid 3px;
+    border-radius: 3px;
+	color: blue;
+	margin: 4px 0 10px 0;
+}
+
+.poll-winning {
+	color: mediumseagreen;
+}
+
+.poll-losing {
+	color: crimson;
+}
+
+.poll-footer {
+	margin-top: 8px;
+}
+
+.poll-vote-button {
+    font-weight: bold;
+	padding: 3px 8px;
+    border-radius: 6px;
+	background: navy;
+	color: white;
+}
+
+.poll-vote-button:hover {
+    text-decoration: none;
+	background: blue;
+}
+
+.poll-vote-button:active {
+    text-decoration: none;
+	background: royalblue;
+}
+
+.poll-voted {
+	float: right;
+}

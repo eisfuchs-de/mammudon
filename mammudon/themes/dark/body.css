@@ -1,0 +1,17 @@
+
+body {
+    margin: 2px;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    color: white;
+    background: #202020;
+}
+
+a {
+    color: lightskyblue;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

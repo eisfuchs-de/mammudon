@@ -1,0 +1,36 @@
+<html>
+<head>
+<style>
+
+%body_css%
+%in_reply_to_css%
+%post_css%
+%media_css%
+%poll_css%
+%card_css%
+%spoiler_css%
+
+</style>
+</head>
+<body>
+
+%boost%
+
+%in_reply_to%
+<div class="post-avatar-name-block">
+    <a href="%post_account_url%"><img class="post-avatar" src="%post_account_avatar%" title="%post_id%"></a>
+    <span class="display-name-block">
+        <span class="display-name"><bdi>%post_account_display_name%</bdi></span>
+        <a href="%post_account_url%"><span class="user-name">@%post_account_acct%</span></a>
+    </span>
+</div>
+%spoiler_start%
+%post_content%
+%poll_content%
+%media_html%
+%card_html%
+%spoiler_end%
+<div id="endofpage"></div>
+
+</body>
+</html>

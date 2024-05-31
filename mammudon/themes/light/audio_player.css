@@ -1,0 +1,20 @@
+
+.audio-player {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    width: 100%;
+}
+
+.audio-description {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.audio-description:hover {
+    color: white;
+    text-decoration: underline;
+}
