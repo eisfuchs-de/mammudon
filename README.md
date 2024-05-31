@@ -7,11 +7,11 @@ in Python using the Qt Version 6 user interface toolkit.
 
 ## Install dependencies
 
-Mastodon.py
-python311-PyQt6
-python311-ffmpeg-python  - !NOTE! Do not install "python-ffmpeg" or just "ffmpeg", it has to be "ffmpeg-python"
-python311-PyQt6-WebEngine
-qt6-multimedia
+- Mastodon.py
+- python311-PyQt6
+- python311-ffmpeg-python  - !NOTE! Do not install "python-ffmpeg" or just "ffmpeg", it has to be "ffmpeg-python"
+- python311-PyQt6-WebEngine
+- qt6-multimedia
 
 ## Installation
 
@@ -38,4 +38,3 @@ python -m install
 ----
 
 [src]: https://github.com/eisfuchs-de/mammudon
-
