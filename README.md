@@ -15,10 +15,10 @@ in Python using the Qt Version 6 user interface toolkit.
 
 ## Installation
 
-Install me without building it yourself:
+Install me without building it yourself (TODO):
 
 ```bash
-pip install mammudon
+pip install mammudon # TODO - not yet available
 ```
 
 ## Usage
