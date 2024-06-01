@@ -3,7 +3,8 @@ import sys
 import weakref
 import webbrowser
 
-from PyQt6.QtCore import QTimer, pyqtSignal, QObject
+from PyQt6 import QtCore
+from PyQt6.QtCore import QTimer, QObject, QEvent
 from PyQt6.QtWidgets import QWidget, QApplication, QLayout, QMessageBox
 
 from mammudon.account import Account
@@ -24,8 +25,6 @@ class Timeline(Scroller):
 	WANTED_PARENTS_SIGNATURE = "999999"
 	# debug housekeeping
 	deleted_posts: dict[int, _weakref.ReferenceType] = {}
-
-	unread_changed = pyqtSignal(bool)
 
 	def __init__(
 			self,
@@ -59,7 +58,9 @@ class Timeline(Scroller):
 		# connect signals
 		self.reload_button.clicked.connect(self.on_reload_button_clicked)
 		self.close_button.clicked.connect(self.on_close_button_clicked)
-		self.unread_button.clicked.connect(self.scroll_to_next_unread)
+
+		# catch mouse clicks on the timeline icon to jump to next unread post
+		self.timeline_icon_widget.installEventFilter(self)
 
 		# reload all posts in the timeline instead of just from the newest post on
 		self.full_reload = True
@@ -86,36 +87,16 @@ class Timeline(Scroller):
 	def __del__(self) -> None:
 		debug("__del__eting timeline", self.scroller_name, "of account", self.account.account_username)
 
-	def on_close_button_clicked(self) -> None:
-		debug("timeline.on_close_button_clicked", self.scroller_name)
+	def eventFilter(self, o: QObject, e: QEvent) -> bool:
+		if o is not self.timeline_icon_widget:
+			return False
 
-		super().on_close_button_clicked()
+		# catch mouse clicks on the timeline icon to jump to next unread post
+		if e.type() == QtCore.QEvent.Type.MouseButtonRelease:
+			self.scroll_to_next_unread()
+			return False
 
-		num_unreads = 0
-
-		# TODO: look for "count_as_unread" - might be good to put this as a flag in here, or
-		#       maybe make it user configurable per timeline
-		if self.scroller_name not in ["public", "local"]:
-			# TODO: the unread counter handling is really clunky, this needs to be improved
-			# make sure all posts in this timeline are removed from the unread counter
-			post: PostView
-			for post_id, post in self.posts.items():
-				# guard against POSTS_SIGNATURE debugging signature in sub list
-				if post_id == self.POSTS_SIGNATURE:
-					continue
-				if post.unread:
-					num_unreads += 1
-
-			for post_id, post in self.threaded_posts.items():
-				# guard against POSTS_SIGNATURE debugging signature in sub list
-				if post_id == self.POSTS_SIGNATURE:
-					continue
-				if post.unread:
-					num_unreads += 1
-
-		self.close_scroller.emit(self, num_unreads)
-
-		debug("closing scroller", self.scroller_name)
+		return False
 
 	def find_unread_offsets(self, layout: QLayout, current_y: int) -> int:
 		if not layout:
@@ -648,9 +629,6 @@ class Timeline(Scroller):
 		self.remaining_time_updater.start(10)
 
 		self.full_reload = False
-
-	def on_post_unread_changed(self, unread: bool) -> None:
-		self.unread_changed.emit(unread)
 
 	def remaining_time(self) -> None:
 		remaining_update_time = self.update_timer.remainingTime()

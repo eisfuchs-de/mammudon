@@ -3,8 +3,8 @@
 import os
 
 from PyQt6 import QtCore
-from PyQt6.QtCore import pyqtSignal, QSize, QEvent
-from PyQt6.QtGui import QIcon, QPixmap, QImage, QWheelEvent
+from PyQt6.QtCore import pyqtSignal, QEvent
+from PyQt6.QtGui import QWheelEvent
 from PyQt6.QtWidgets import QWidget, QPushButton, QScrollArea, QLabel, QVBoxLayout
 from PyQt6.uic import loadUi
 from mastodon import Mastodon
@@ -20,6 +20,7 @@ class Scroller(QWidget):
 	reply_to_post = pyqtSignal(object, bool)  # dict with the post to reply to inside
 	close_scroller = pyqtSignal(QWidget, int)  # int - num unread posts
 	minimized = pyqtSignal()
+	unread_changed = pyqtSignal(bool)
 
 	def __init__(self, *, name: str, friendly_name: str, account: Account):
 		super().__init__()
@@ -31,7 +32,8 @@ class Scroller(QWidget):
 		# TODO: needs to be renamed to scroller.ui
 		loadUi(os.path.join(os.path.dirname(__file__), "ui", "timeline.ui"), self)
 
-		self.unread_button: QPushButton = self.findChild(QPushButton, "timelineUnreadButton")
+		self.timeline_icon_widget: QWidget = self.findChild(QWidget, "timelineIconWidget")
+		self.unread_label: QLabel = self.findChild(QLabel, "unreadLabel")
 		self.reload_button: QPushButton = self.findChild(QPushButton, "timelineReloadBtn")
 		self.scroll_area: QScrollArea = self.findChild(QScrollArea, "timelineScrollArea")
 		self.label: QLabel = self.findChild(QLabel, "accountLabel")
@@ -56,24 +58,14 @@ class Scroller(QWidget):
 		self.my_id: int = account.account["id"]  # convenience
 
 		if self.scroller_name in self.preset_timelines:
-			self.unread_button.setText("")
-			self.unread_button.setToolTip(self.preset_timelines[self.scroller_name])
-			self.unread_button.setFixedHeight(32)
-			self.unread_button.setFixedWidth(32)
-			self.unread_button.setIconSize(QSize(32, 32))
-			self.unread_button.setIcon(
-				QIcon(
-					QPixmap.fromImage(
-						QImage(
-							os.path.join(os.path.dirname(__file__), "icons", "timeline_" + self.scroller_name + ".png")
-						).scaled(
-							32, 32, QtCore.Qt.AspectRatioMode.IgnoreAspectRatio, QtCore.Qt.TransformationMode.SmoothTransformation
-						)
-					)
-				)
-			)
+			# this is a bit convoluted because background-image does not work on QWidget, and we
+			# apparently also need the absolute path to the image for the style sheet to work
+			file_path = os.path.abspath(__file__)
+			icon_path = os.path.join(os.path.abspath(os.path.dirname(file_path)), "icons", "timeline_" + self.scroller_name + ".png")
+			style_sheet = "border-image: url(" + icon_path + ") 0 0 0 0 stretch stretch;"
+			self.timeline_icon_widget.setStyleSheet(style_sheet)
 		else:
-			self.unread_button.setText(self.preset_timelines[self.scroller_name])
+			self.unread_label.setText(self.preset_timelines[self.scroller_name])
 
 		# connect signals
 		self.timeline_view: QWidget = self.scroll_area.widget()
@@ -82,9 +74,26 @@ class Scroller(QWidget):
 		self.timeline_view.setLayout(QVBoxLayout(self.timeline_view))
 		self.timeline_view.layout().setContentsMargins(0, 0, 0, 0)
 
-	# needs to be re-implemented by the superclass
+		self.unread_count = 0
+		self.unread_label.setVisible(False)
+		self.unread_label.setAttribute(QtCore.Qt.WidgetAttribute.WA_TransparentForMouseEvents)
+
+	def on_post_unread_changed(self, unread: bool) -> None:
+		if unread:
+			self.unread_count += 1
+		else:
+			self.unread_count -= 1
+
+		# TODO: find a way to do this with stylesheets that adapt automatically
+		label = str(self.unread_count)
+		self.unread_label.setText(label)
+		self.unread_label.setVisible(bool(self.unread_count))
+		self.unread_label.setFixedWidth(len(label) * 6 + 8)
+		self.timeline_icon_widget.layout().setContentsMargins(31 - len(label) * 6 - 8, 20, 0, 0)
+		self.unread_changed.emit(unread)
+
 	def on_close_button_clicked(self) -> None:
-		pass
+		self.close_scroller.emit(self, self.unread_count)
 
 	def scroll_event(self, e: QWheelEvent) -> None:
 		# debug("scroll!", e)
