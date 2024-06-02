@@ -94,6 +94,19 @@
     <enum>QAction::NoRole</enum>
    </property>
   </action>
+  <action name="conversationActionReload">
+   <property name="icon">
+    <iconset>
+     <normalon>../icons/reload.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Reload Conversation</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
