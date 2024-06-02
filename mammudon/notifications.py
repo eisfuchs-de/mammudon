@@ -262,8 +262,8 @@ class Notifications(Scroller):
 
 		if len(self.notification_queue):
 			debug("notification queue not yet empty, probably a thread put something in it while we were adding ... will be in the next round - in timeline", self.scroller_name)
-		else:
-			debug("notification queue empty, good! - in timeline", self.scroller_name)
+		# else:
+		# 	debug("notification queue empty, good! - in timeline", self.scroller_name)
 
 		self.purge_notifications()
 

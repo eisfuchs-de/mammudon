@@ -248,8 +248,8 @@ class Conversations(Scroller):
 
 		if len(self.conversation_queue):
 			debug("conversation queue not yet empty, probably a thread put something in it while we were adding ... will be in the next round - in timeline", self.scroller_name)
-		else:
-			debug("conversation queue empty, good! - in timeline", self.scroller_name)
+		# else:
+		# 	debug("conversation queue empty, good! - in timeline", self.scroller_name)
 
 		self.purge_conversations()
 
