@@ -71,6 +71,16 @@ class ActionThread(QThread):
 					status: dict = self.mastodon.status(status_id)
 					callback(status_id, {"action": "reload", "result": status})
 
+				elif action == "reload_notification":
+					notification: dict = self.mastodon.notifications(id=status_id)
+					debug(notification)
+					callback(status_id, {"action": "reload_notification", "result": notification})
+
+				# TODO: conversations work differently (see https://mastodonpy.readthedocs.io/en/stable/02_return_values.html#conversation-dicts)
+				#       so this here probably just doesn't work yet
+				elif action == "reload_conversation":
+					conversation: list = self.mastodon.conversations(min_id=status_id, max_id=status_id)
+					callback(status_id, {"action": "reload_conversation", "result": conversation})
 				else:
 					debug("unknown action item", action_item)
 					breakpoint()

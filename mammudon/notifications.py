@@ -142,6 +142,7 @@ class Notifications(Scroller):
 
 			self.minimized.connect(notification_view.minimized)
 			notification_view.mouse_wheel_event.connect(self.scroll_event)
+			notification_view.reload_notification.connect(self.reload_notification)
 
 			insert_index = self.timeline_view.layout().count()
 			for index in range(insert_index):
@@ -158,11 +159,8 @@ class Notifications(Scroller):
 			self.notifications[notification_id] = notification_view
 
 		else:
-			# TODO: is there something we need to do when we already know this notification?
-			#       update its html maybe, in case the referring post changed?
-			# DEBUG: for testing notifications styling
+			# TODO: is there something else we need to do when we already know this notification?
 			notification_view.set_html(format_notification(preferences.values, self.my_id, notification))
-			pass
 
 		notification_view.set_original_post(notification)
 
@@ -270,6 +268,32 @@ class Notifications(Scroller):
 	def connect_to_stream_listener(self, stream_name: str, stream_listener: Listener) -> None:
 		if stream_name == self.scroller_name:
 			stream_listener.incoming_notification.connect(self.queue_notification)
+
+	def reload_notification(self, notification_view: NotificationView) -> None:
+		notification_view.setEnabled(False)
+		self.account.status_action({"status_id": notification_view.id, "action": "reload_notification", "callback": self.status_update_callback})
+
+	def status_update_callback(self, notification_id, update: dict) -> None:
+		notification_view: NotificationView
+		if notification_id not in self.notifications:
+			return
+
+		notification_view = self.notifications[notification_id]
+
+		reload_notification = True
+
+		action: str = update["action"]
+		if action == "reload_notification":
+			notification_view.setEnabled(True)
+			self.queue_notification(update["result"])
+			# obviously we are already reloading this notification, so don't reload it again
+			reload_notification = False
+		else:
+			debug("unknown status update", update)
+			breakpoint()
+
+		if reload_notification:
+			self.reload_notification(notification_view)
 
 	# DEBUG: catch == which is probably not desired
 	def __eq__(self, other):

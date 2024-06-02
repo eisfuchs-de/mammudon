@@ -21,6 +21,7 @@ class NotificationPage(QWebEnginePage):
 class NotificationView(QWidget):
 
 	mouse_wheel_event = pyqtSignal(object)  # QEvent with type() == Wheel
+	reload_notification = pyqtSignal(object)  # (NotificationView)
 
 	def __init__(self, *, notification_id: int):
 		super().__init__()
@@ -35,6 +36,7 @@ class NotificationView(QWidget):
 		# DEBUG: create debug action to be able to copy the raw post or HTML source to the clipboard
 		self.debug_action_copy_html: QAction = self.findChild(QAction, "debugCopyHtml")
 		self.debug_action_copy_raw: QAction = self.findChild(QAction, "debugCopyRaw")
+		self.notification_action_reload: QAction = self.findChild(QAction, "notificationActionReload")
 
 		# original post before changing the HTML or anything else
 		self.original_post = {}
@@ -65,6 +67,8 @@ class NotificationView(QWidget):
 
 		self.debug_action_copy_html.triggered.connect(self.copy_html_to_clipboard)
 		self.debug_action_copy_raw.triggered.connect(self.copy_raw_to_clipboard)
+		self.notification_action_reload.triggered.connect(self.reload_notification_clicked)
+
 		self.web_view.setContextMenuPolicy(QtCore.Qt.ContextMenuPolicy.NoContextMenu)
 		self.menus: QMenu | None = None
 
@@ -106,7 +110,11 @@ class NotificationView(QWidget):
 			e: QContextMenuEvent
 
 			self.menus = QMenu()
-			self.menus.addActions([self.debug_action_copy_raw, self.debug_action_copy_html])
+			self.menus.addActions([
+				self.debug_action_copy_raw,
+				self.debug_action_copy_html,
+				self.notification_action_reload,
+			])
 			self.menus.popup(e.globalPos())
 
 			return False
@@ -162,6 +170,9 @@ class NotificationView(QWidget):
 		# developer to copy the raw status dict of this post to the clipboard so errors can
 		# be investigated
 		QApplication.clipboard().setText(str(self.original_post))
+
+	def reload_notification_clicked(self, _checked: bool) -> None:
+		self.reload_notification.emit(self)
 
 	# DEBUG: catch == which is probably not desired
 	def __eq__(self, other):

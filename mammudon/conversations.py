@@ -125,6 +125,7 @@ class Conversations(Scroller):
 
 			self.minimized.connect(conversation_view.minimized)
 			conversation_view.mouse_wheel_event.connect(self.scroll_event)
+			conversation_view.reload_conversation.connect(self.reload_conversation)
 
 			insert_index = self.timeline_view.layout().count()
 			for index in range(insert_index):
@@ -141,11 +142,8 @@ class Conversations(Scroller):
 			self.conversations[conversation_id] = conversation_view
 
 		else:
-			# TODO: is there something we need to do when we already know this conversation?
-			#       update its html maybe, in case the referring post changed?
-			# DEBUG: for testing conversations styling
+			# TODO: is there something else we need to do when we already know this conversation?
 			conversation_view.set_html(format_conversation(preferences.values, self.my_id, conversation))
-			pass
 
 		conversation_view.original_post = conversation
 
@@ -166,6 +164,9 @@ class Conversations(Scroller):
 			else:
 				# get the newest posts
 				# TODO: unsure if the same timeline length should be applied to conversations
+
+				# TODO: conversations work differently (see https://mastodonpy.readthedocs.io/en/stable/02_return_values.html#conversation-dicts)
+				#       so this here probably just doesn't work yet
 				timeline: list[dict] = self.mastodon.conversations(
 					limit=preferences.values["max_timeline_length"], since_id=self.newest_id
 				)
@@ -256,6 +257,38 @@ class Conversations(Scroller):
 	def connect_to_stream_listener(self, stream_name: str, stream_listener: Listener) -> None:
 		if stream_name == self.scroller_name:
 			stream_listener.incoming_conversation.connect(self.queue_conversation)
+
+	# TODO: conversations work differently (see https://mastodonpy.readthedocs.io/en/stable/02_return_values.html#conversation-dicts)
+	#       so this here probably just doesn't work yet
+	def reload_conversation(self, conversation_view: ConversationView) -> None:
+		conversation_view.setEnabled(False)
+		self.account.status_action({"status_id": conversation_view.id, "action": "reload_conversation", "callback": self.status_update_callback})
+
+	def status_update_callback(self, conversation_id, update: dict) -> None:
+		conversation_view: ConversationView
+		if conversation_id not in self.conversations:
+			return
+
+		conversation_view = self.conversations[conversation_id]
+
+		reload_conversation = True
+
+		action: str = update["action"]
+
+		# TODO: conversations work differently (see https://mastodonpy.readthedocs.io/en/stable/02_return_values.html#conversation-dicts)
+		#       so this here probably just doesn't work yet
+		if action == "reload_conversation":
+			if update["result"]:
+				conversation_view.setEnabled(True)
+				self.queue_conversation(update["result"])
+			# obviously we are already reloading this conversation, so don't reload it again
+			reload_conversation = False
+		else:
+			debug("unknown status update", update)
+			breakpoint()
+
+		if reload_conversation:
+			self.reload_conversation(conversation_view)
 
 	# DEBUG: catch == which is probably not desired
 	def __eq__(self, other):
