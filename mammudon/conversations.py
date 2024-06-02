@@ -210,7 +210,7 @@ class Conversations(Scroller):
 			debug("Lingering deleted posts: ", len(self.deleted_conversations))
 
 			for deleted_conversation_id in list(self.deleted_conversations.keys()):
-				# guard against "deleted_notifications" debugging signature
+				# guard against DELETED_CONVERSATIONS_SIGNATURE debugging signature
 				if deleted_conversation_id == self.DELETED_CONVERSATIONS_SIGNATURE:
 					continue
 
