@@ -149,7 +149,6 @@ class NotificationView(QWidget):
 			return
 
 		# HACK: run a small javascript that tells us where (in pixels) the end of page is
-		debug(self.post_html.replace("\n", " "))
 		self.web_page.runJavaScript('if (typeof endofpage !== "undefined") { endofpage.offsetTop; }  else 0;', self.size_callback)
 
 	def size_callback(self, result) -> None:
